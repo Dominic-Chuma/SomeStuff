@@ -18,3 +18,13 @@
 // app.use((req, res, next) => {
 //     console.log("Response Given....")
 // });
+
+postgreSQL
+U:- me;
+P:- password.
+
+MainU:- postgres;
+P:-myemail's p;
+
+To install node-postgres Driver
+npm i --save pg

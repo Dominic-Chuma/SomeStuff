@@ -3,6 +3,8 @@ const bodyparser = require('body-parser');
 
 const app = express();
 
+const db = require('./query');
+
 // Middleware-----BEGINNING
 
 // Set headers for our routes...
@@ -30,7 +32,13 @@ app.use((req, res, next) => {
 //     });
 // }
 
+// No.1...
 app.use(bodyparser.json());
+
+// No.2....
+app.use(bodyparser.urlencoded({
+    extended:true,
+}));
 
 
 // The use() method is for GET Requests.....
@@ -50,6 +58,29 @@ app.get('/', (req, res, next) => {
     res.status(201).json(message);
     // res.status(400).json({message:""});
     next();
+});
+
+// Endpoints for the Vue.js assignment.
+// app.get('/users', db.getUsers);
+// ========== OR ==========
+
+app.get('/users',(req, res, next) => {
+    res.status(200).json({
+        users:[
+            {
+                id:1,
+                name:'Jerry',
+                email:'jerry@example.com',
+                password:'blablabla'
+            },
+            {
+                id:2,
+                name:'Sherley',
+                email:'sherlock@holmes.com',
+                password:'blebleble'
+            }
+        ]
+    })
 });
 
 
@@ -240,7 +271,7 @@ app.post('/validate-rule',(req, res, next) =>{
                 });
             }
             
-        }else{
+        }else{ // If JSON Data is invalid...
             res.status(400).json({
                 message:"Invalid JSON payload passed.",
                 status:"error",
