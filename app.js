@@ -64,7 +64,7 @@ app.get('/', (req, res, next) => {
 // app.get('/users', db.getUsers);
 // ========== OR ==========
 
-app.get('/users',(req, res, next) => {
+app.post('/users',(req, res, next) => {
     res.status(200).json({
         users:[
             {
@@ -80,7 +80,9 @@ app.get('/users',(req, res, next) => {
                 password:'blebleble'
             }
         ]
-    })
+    });
+
+    next();
 });
 
 
