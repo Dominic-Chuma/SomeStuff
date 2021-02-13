@@ -64,7 +64,8 @@ app.get('/', (req, res, next) => {
 // app.get('/users', db.getUsers);
 // ========== OR ==========
 
-app.post('/users',(req, res, next) => {
+app.get('/users',(req, res, next) => {
+    
     res.status(200).json({
         users:[
             {
@@ -82,6 +83,45 @@ app.post('/users',(req, res, next) => {
         ]
     });
 
+    next();
+});
+
+
+app.post('/user',(req, res, next) => {
+    if (req.body){
+        if ("email" in req.body){
+            if("password" in req.body){
+                if((req.body.email === 'jerry@example.com' && req.body.password === 'blablabla') || (req.body.email === 'sherlock@holmes.com' && req.body.password === 'blebleble')){
+                    res.status(200).json({
+                        message:"You are Logged in.",
+                        status:"success"
+                    });
+                }else{
+                    res.status(400).json({
+                        message:"You are not Logged in"
+                    })
+                }
+            }else{
+                res.status(400).json({
+                    message:"Please enter your password.",
+                    status:"error",
+                    data:null
+                });
+            }
+        }else{
+            res.status(400).json({
+                message:"Please enter your email.",
+                status:"error",
+                data:null
+            });
+        }
+    }else{
+        res.status(400).json({
+            message:"Please enter your Login details.",
+            status:"error",
+            data:null
+        });
+    }
     next();
 });
 
